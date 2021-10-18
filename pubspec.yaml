@@ -34,9 +34,9 @@ dependencies:
   generic_bloc_provider: ^1.1.0
   rxdart: ^0.27.2
   flutter_svg: ^0.22.0
-  firebase_auth: ^3.1.1
-  firebase_core: ^1.6.0
-  firebase_database: ^8.0.0
+  # firebase_auth: ^3.1.1
+  # firebase_core: ^1.6.0
+  # firebase_database: ^8.0.0
 
 dev_dependencies:
   flutter_test:

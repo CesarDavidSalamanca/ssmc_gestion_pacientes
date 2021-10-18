@@ -48,7 +48,16 @@ class _StreamTextFieldState extends State<StreamTextField> {
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.width * 0.16;
+    double width = MediaQuery.of(context).size.width;
+    if (width > 600) {
+      if (width > 900) {
+        width = ((width - 251) / 2) * 0.9;
+      } else
+        width = (width - 250) * 0.8;
+    } else {
+      width = width * 0.8;
+    }
+    double height = width * 0.16;
     final currentTheme = Provider.of<ThemeChanger>(context).currentTheme;
     _textEditingController.text = widget.initialValue;
     return Column(
@@ -274,6 +283,155 @@ class StreamTextFieldWithCheckBox extends StatelessWidget {
       obscureText: obscureText,
       labelFontWeight: labelFontWeight,
       button: button,
+    );
+  }
+}
+
+class StreamDropDown extends StatelessWidget {
+  final Stream<String> textStream;
+  final Function(String) changeStream;
+  final String hintText;
+  final String labelText;
+  final String counterText;
+  final bool enable;
+  final String initialValue;
+  final String icon;
+  final bool obscureText;
+  final FontWeight labelFontWeight;
+  final List<DropDownElement> dropDownElements;
+
+  const StreamDropDown({
+    @required this.textStream,
+    @required this.changeStream,
+    @required this.dropDownElements,
+    this.hintText = '',
+    this.labelText = '',
+    this.counterText = '',
+    this.icon,
+    this.enable = true,
+    this.initialValue = "",
+    this.obscureText = false,
+    this.labelFontWeight = FontWeight.w500,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final currentTheme = Provider.of<ThemeChanger>(context).currentTheme;
+    double width = MediaQuery.of(context).size.width;
+    if (width > 600) {
+      if (width > 900) {
+        width = ((width - 251) / 2) * 0.9;
+      } else
+        width = (width - 250) * 0.8;
+    } else {
+      width = width * 0.8;
+    }
+    final height = width * 0.16;
+    final maxWidth = height * 1.35;
+    final maxHeight = height * 0.6;
+
+    Widget button = Container(
+      // width: maxWidth,
+      height: maxHeight,
+      child: Row(
+        children: [
+          Container(
+              width: maxWidth,
+              height: maxHeight,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                  ),
+                  color: currentTheme.primaryColor,
+                  boxShadow: [
+                    BoxShadow(
+                        color: currentTheme.dividerColor.withOpacity(0.5),
+                        blurRadius: height * 0.05,
+                        spreadRadius: height * 0.01)
+                  ]),
+              child: PopupMenuButton<String>(
+                icon: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.arrow_drop_down,
+                      size: maxHeight * 0.6,
+                      color: currentTheme.primaryColorLight,
+                    ),
+                    Expanded(
+                      child: Text(
+                        "Item",
+                        style: TextStyle(
+                            color: currentTheme.primaryColorLight,
+                            fontSize: maxHeight * 0.3,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    )
+                  ],
+                ),
+                itemBuilder: (context) => [
+                  for (var item in dropDownElements)
+                    PopupMenuItem(
+                      child: Text(item.label),
+                      value: item.text,
+                    ),
+                ],
+                onSelected: (value) {
+                  changeStream(value);
+                },
+              )),
+          Container(
+            width: maxWidth * 0.075,
+            height: maxHeight,
+            color: currentTheme.primaryColorLight,
+          )
+        ],
+      ),
+    );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          labelText,
+          style: TextStyle(
+              fontSize: height * 0.19,
+              fontWeight: labelFontWeight,
+              color: currentTheme.dividerColor),
+        ),
+        SizedBox(
+          height: height * 0.075,
+        ),
+        StreamBuilder<String>(
+            stream: textStream,
+            initialData: "Seleccione un item",
+            builder: (context, snapshot) {
+              return Container(
+                child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Row(
+                      children: [
+                        button,
+                        Expanded(
+                          child: Container(
+                            height: maxHeight,
+                            decoration: BoxDecoration(
+                                color: currentTheme.secondaryHeaderColor,
+                                borderRadius: BorderRadius.only(
+                                    bottomRight: Radius.circular(7.5),
+                                    topRight: Radius.circular(7.5))),
+                            child: Center(
+                              child: Text(snapshot.data == null
+                                  ? "Seleccione un item"
+                                  : snapshot.data),
+                            ),
+                          ),
+                        )
+                      ],
+                    )),
+              );
+            }),
+      ],
     );
   }
 }

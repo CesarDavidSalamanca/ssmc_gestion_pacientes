@@ -10,7 +10,7 @@ class ThemeChanger with ChangeNotifier {
   final _customThemeData = ThemeData.dark().copyWith();
   final _lightThemeData = ThemeData(
       primaryColor: Color(0xff003870),
-      accentColor: Color(0xffFFCA05),
+      accentColor: Colors.green,
       primaryColorLight: Colors.white,
       fontFamily: 'Montserrat',
       secondaryHeaderColor: Color(0xffF2F2F2),

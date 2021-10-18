@@ -1,3 +1,4 @@
+import 'package:ssmc_gestion_pacientes/src/launcher_page/launcher_page.dart';
 import 'package:ssmc_gestion_pacientes/src/login/bloc/login_bloc.dart';
 import 'package:ssmc_gestion_pacientes/src/theme/theme.dart';
 import 'package:ssmc_gestion_pacientes/src/widgets/buttons.dart';
@@ -6,78 +7,172 @@ import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:provider/provider.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   static final String pageRoute = "login";
   const LoginPage({
     Key key,
   }) : super(key: key);
 
   @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  bool firstBuild;
+  LoginBloc loginBloc;
+  @override
+  void initState() {
+    super.initState();
+    firstBuild = true;
+  }
+
+  @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+    if (firstBuild) {
+      loginBloc = LoginBloc();
+      firstBuild = false;
+    }
     final currentTheme = Provider.of<ThemeChanger>(context).currentTheme;
     return BlocProvider(
-      bloc: LoginBloc(),
+      bloc: loginBloc,
       child: Scaffold(
-          body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Stack(
-          children: [
-            Image.asset("assets/img/FONDO-AZUL.png", width: width),
-            Positioned(
-              top: width * 0.2,
-              left: width * 0.3,
-              child: Image.asset(
-                "assets/img/LOGO-LOGIN.png",
-                width: width * 0.4,
+          body: width <= 600
+              ? _PortraitView(width: width, currentTheme: currentTheme)
+              : _WebView(width: width, currentTheme: currentTheme)),
+    );
+  }
+}
+
+class _PortraitView extends StatelessWidget {
+  const _PortraitView({
+    Key key,
+    @required this.width,
+    @required this.currentTheme,
+  }) : super(key: key);
+
+  final double width;
+  final ThemeData currentTheme;
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
+      child: Stack(
+        children: [
+          // Image.asset("assets/img/FONDO-AZUL.png", width: width),
+          // Positioned(
+          //   top: width * 0.2,
+          //   left: width * 0.3,
+          //   child: Image.asset(
+          //     "assets/img/LOGO-LOGIN.png",
+          //     width: width * 0.4,
+          //   ),
+          // ),
+          Positioned(
+            top: width * 0.6,
+            left: width * 0.175,
+            child: Container(
+              width: width * 0.65,
+              child: Text(
+                "Aplicación móvil de gestión de finanzas para microempresarios",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: currentTheme.primaryColorLight,
+                    fontSize: width * 0.035,
+                    fontWeight: FontWeight.w700),
               ),
             ),
-            Positioned(
-              top: width * 0.6,
-              left: width * 0.175,
-              child: Container(
-                width: width * 0.65,
-                child: Text(
-                  "Aplicación móvil de gestión de finanzas para microempresarios",
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: width * 0.1),
+            width: width * 0.8,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: width * 0.4),
+                Text(
+                  "Observatorio municipal de salud mental de Cajamarca",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      color: currentTheme.primaryColorLight,
+                      color: currentTheme.dividerColor,
                       fontSize: width * 0.035,
                       fontWeight: FontWeight.w700),
                 ),
-              ),
+                SizedBox(height: width * 0.05),
+                _CardLogin(
+                  width: width,
+                ),
+              ],
             ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: width * 0.1),
-              width: width * 0.8,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(height: width * 0.6),
-                  Text(
-                    "Aplicación móvil de gestión de finanzas para microempresarios",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.transparent,
-                        fontSize: width * 0.035,
-                        fontWeight: FontWeight.w700),
-                  ),
-                  SizedBox(height: width * 0.05),
-                  _CardLogin(),
-                ],
-              ),
-            )
-          ],
-        ),
-      )),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class _WebView extends StatelessWidget {
+  const _WebView({
+    Key key,
+    @required this.width,
+    @required this.currentTheme,
+  }) : super(key: key);
+
+  final double width;
+  final ThemeData currentTheme;
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
+      child: Stack(
+        children: [
+          // Image.asset("assets/img/FONDO-AZUL.png", width: width),
+          // Positioned(
+          //   top: width * 0.2,
+          //   left: width * 0.3,
+          //   child: Image.asset(
+          //     "assets/img/LOGO-LOGIN.png",
+          //     width: width * 0.4,
+          //   ),
+          // ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: width * 0.1),
+            width: width * 0.8,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: 100),
+                Text(
+                  "Observatorio municipal de salud mental de Cajamarca",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: currentTheme.dividerColor,
+                      fontSize: 600 * 0.035,
+                      fontWeight: FontWeight.w700),
+                ),
+                SizedBox(height: 600 * 0.05),
+                _CardLogin(
+                  width: 600,
+                ),
+                SizedBox(height: 100),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }
 
 class _CardLogin extends StatefulWidget {
+  final double width;
   const _CardLogin({
     Key key,
+    @required this.width,
   }) : super(key: key);
 
   @override
@@ -96,8 +191,8 @@ class __CardLoginState extends State<_CardLogin> {
 
   @override
   Widget build(BuildContext context) {
+    final width = widget.width;
     final loginBloc = BlocProvider.of<LoginBloc>(context);
-    final width = MediaQuery.of(context).size.width;
     final currentTheme = Provider.of<ThemeChanger>(context).currentTheme;
     if (firstBuild) {
       firstBuild = false;
@@ -105,17 +200,19 @@ class __CardLoginState extends State<_CardLogin> {
         labelText: "Correo electrónico",
         textStream: loginBloc.emailStream,
         changeStream: loginBloc.changeEmail,
-        icon: "assets/svg/mail.svg",
+        // icon: "assets/svg/mail.svg",
         hintText: 'ejemplo@gmail.com',
         keyboardType: TextInputType.emailAddress,
+        initialValue: loginBloc.email,
       );
       passwordTextfield = StreamTextField(
         labelText: "Contraseña",
         textStream: loginBloc.passwordStream,
         changeStream: loginBloc.changePassword,
-        icon: "assets/svg/key.svg",
+        // icon: "assets/svg/key.svg",
         hintText: '* * * * * * * *',
         obscureText: true,
+        initialValue: loginBloc.password,
       );
     }
     return Container(
@@ -153,37 +250,37 @@ class __CardLoginState extends State<_CardLogin> {
             child: ButtonRounded(
               onTap: () async {
                 final response = await loginBloc.loginAccess(() {}, () {});
-                // if (response)
-                //   Navigator.pushNamed(context, UserProfilePage.pageRoute);
+                if (response)
+                  Navigator.popAndPushNamed(context, LauncherPage.pageRoute);
               },
               text: 'Ingresar',
               fontSize: width * 0.05,
             ),
           ),
           SizedBox(height: width * 0.08),
-          Container(
-            width: width,
-            height: width * 0.1,
-            child: ButtonRounded(
-              onTap: () {
-                // Navigator.pushNamed(context, RegisterPage.pageRoute);
-              },
-              text: 'Registrarse',
-              fontSize: width * 0.05,
-              buttonColor: currentTheme.accentColor,
-              textColor: currentTheme.primaryColor,
-            ),
-          ),
-          SizedBox(height: width * 0.06),
-          FittedBox(
-            child: MyTextButton(
-              text: "¿Olvidó su contraseña?",
-              onPressed: () {
-                // Navigator.pushNamed(context, RecoveryPasswordPage.pageRoute);
-              },
-              fontSize: width * 0.045,
-            ),
-          ),
+          // Container(
+          //   width: width,
+          //   height: width * 0.1,
+          //   child: ButtonRounded(
+          //     onTap: () {
+          //       // Navigator.pushNamed(context, RegisterPage.pageRoute);
+          //     },
+          //     text: 'Registrarse',
+          //     fontSize: width * 0.05,
+          //     buttonColor: currentTheme.accentColor,
+          //     textColor: currentTheme.primaryColor,
+          //   ),
+          // ),
+          // SizedBox(height: width * 0.06),
+          // FittedBox(
+          //   child: MyTextButton(
+          //     text: "¿Olvidó su contraseña?",
+          //     onPressed: () {
+          //       // Navigator.pushNamed(context, RecoveryPasswordPage.pageRoute);
+          //     },
+          //     fontSize: width * 0.045,
+          //   ),
+          // ),
         ],
       ),
     );
