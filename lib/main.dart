@@ -32,8 +32,8 @@ class MyApp extends StatelessWidget {
       theme: currentTheme,
       debugShowCheckedModeBanner: false,
       routes: routes,
-      initialRoute: LoginPage.pageRoute,
-      // initialRoute: LauncherPage.pageRoute,
+      // initialRoute: LoginPage.pageRoute,
+      initialRoute: LauncherPage.pageRoute,
     );
   }
 }

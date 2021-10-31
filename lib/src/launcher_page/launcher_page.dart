@@ -26,11 +26,12 @@ class LauncherPage extends StatelessWidget {
               height: double.infinity,
               child: ListaOpciones(),
             ),
-          Container(
-            width: 1,
-            height: double.infinity,
-            color: appTheme.primaryColorLight,
-          ),
+          if (width > 600)
+            Container(
+              width: 1,
+              height: double.infinity,
+              color: appTheme.primaryColorLight,
+            ),
           Expanded(child: layoutModel.currentPage)
         ],
       ),

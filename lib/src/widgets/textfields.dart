@@ -154,6 +154,74 @@ class _StreamTextFieldState extends State<StreamTextField> {
   }
 }
 
+class FalseTextField extends StatefulWidget {
+  final String hintText;
+  final String labelText;
+  final String initialValue;
+  final FontWeight labelFontWeight;
+
+  FalseTextField({
+    this.hintText = '',
+    this.labelText = '',
+    this.initialValue = "",
+    this.labelFontWeight = FontWeight.w500,
+  });
+
+  @override
+  _FalseTextFieldState createState() => _FalseTextFieldState();
+}
+
+class _FalseTextFieldState extends State<FalseTextField> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    if (width > 600) {
+      if (width > 900) {
+        width = ((width - 251) / 2) * 0.9;
+      } else
+        width = (width - 250) * 0.8;
+    } else {
+      width = width * 0.8;
+    }
+    double height = width * 0.16;
+    final currentTheme = Provider.of<ThemeChanger>(context).currentTheme;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          widget.labelText,
+          style: TextStyle(
+              fontSize: height * 0.19,
+              fontWeight: widget.labelFontWeight,
+              color: currentTheme.dividerColor),
+        ),
+        SizedBox(
+          height: height * 0.075,
+        ),
+        Container(
+          height: height * 0.6,
+          padding: EdgeInsets.only(left: height * 0.2),
+          decoration: BoxDecoration(
+              color: currentTheme.secondaryHeaderColor,
+              borderRadius: BorderRadius.circular(7.5)),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              widget.initialValue == null ? "" : widget.initialValue,
+              style: TextStyle(fontSize: height * 0.25),
+            ),
+          ),
+        )
+      ],
+    );
+  }
+}
+
 class DropDownElement {
   String text;
   String label;
