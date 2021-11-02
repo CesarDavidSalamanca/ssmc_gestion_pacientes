@@ -22,28 +22,21 @@ class _SearchPatientPageState extends State<SearchPatientPage> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     if (firstBuild) {
       firstBuild = false;
       locatePatientBloc = SearchPatientBloc();
       dataModel = DataModel();
-      Future.delayed(Duration(seconds: 5))
-          .then((value) => dataModel.currentPatient);
     }
     return BlocProvider(
       bloc: locatePatientBloc,
       child: ChangeNotifierProvider(
         create: (_) => dataModel,
         child: Scaffold(
-            body: SingleChildScrollView(
-                child: Column(
+            body: Column(
           children: [
-            SizedBox(
-              height: height * 0.05,
-            ),
-            SearchPatientCards(width: width),
+            Expanded(child: SearchPatientCards(width: width)),
           ],
-        ))),
+        )),
       ),
     );
   }

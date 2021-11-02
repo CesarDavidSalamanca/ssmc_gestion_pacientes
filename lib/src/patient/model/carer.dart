@@ -15,4 +15,19 @@ class Carer {
   String carerOnMap;
   String carerRoadOnMap;
   String timeFromRoadToCarer;
+
+  Carer(
+      {this.address,
+      this.birthdate,
+      this.carerOnMap,
+      this.carerRoadOnMap,
+      this.civilState,
+      this.doc,
+      this.eps,
+      this.name,
+      this.relationship,
+      this.timeFromRoadToCarer,
+      this.typeAfiliation,
+      this.typeDoc,
+      this.zone});
 }
