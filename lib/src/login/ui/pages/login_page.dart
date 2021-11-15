@@ -2,6 +2,7 @@ import 'package:ssmc_gestion_pacientes/src/launcher_page/launcher_page.dart';
 import 'package:ssmc_gestion_pacientes/src/login/bloc/login_bloc.dart';
 import 'package:ssmc_gestion_pacientes/src/theme/theme.dart';
 import 'package:ssmc_gestion_pacientes/src/widgets/buttons.dart';
+import 'package:ssmc_gestion_pacientes/src/widgets/snackbar.dart';
 import 'package:ssmc_gestion_pacientes/src/widgets/textfields.dart';
 import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
@@ -249,7 +250,7 @@ class __CardLoginState extends State<_CardLogin> {
             height: width * 0.08,
             child: ButtonRounded(
               onTap: () async {
-                final response = await loginBloc.loginAccess(() {}, () {});
+                final response = await loginBloc.loginAccess(onFailure);
                 if (response)
                   Navigator.popAndPushNamed(context, LauncherPage.pageRoute);
               },
@@ -257,32 +258,25 @@ class __CardLoginState extends State<_CardLogin> {
               fontSize: width * 0.045,
             ),
           ),
-          // SizedBox(height: width * 0.08),
-          // Container(
-          //   width: width,
-          //   height: width * 0.1,
-          //   child: ButtonRounded(
-          //     onTap: () {
-          //       // Navigator.pushNamed(context, RegisterPage.pageRoute);
-          //     },
-          //     text: 'Registrarse',
-          //     fontSize: width * 0.05,
-          //     buttonColor: currentTheme.accentColor,
-          //     textColor: currentTheme.primaryColor,
-          //   ),
-          // ),
-          // SizedBox(height: width * 0.06),
-          // FittedBox(
-          //   child: MyTextButton(
-          //     text: "¿Olvidó su contraseña?",
-          //     onPressed: () {
-          //       // Navigator.pushNamed(context, RecoveryPasswordPage.pageRoute);
-          //     },
-          //     fontSize: width * 0.045,
-          //   ),
-          // ),
         ],
       ),
     );
+  }
+
+  onFailure(String message) {
+    double width = MediaQuery.of(context).size.width;
+    if (widget.width > 600) {
+      if (widget.width > 900) {
+        width = ((widget.width - 251) / 2) * 0.9;
+      } else
+        width = (widget.width - 250) * 0.8;
+    } else {
+      width = widget.width * 0.8;
+    }
+    ThemeData currentTheme =
+        Provider.of<ThemeChanger>(context, listen: false).currentTheme;
+    final snackBar = mySnackBarError(width, currentTheme, message);
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

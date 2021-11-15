@@ -496,19 +496,9 @@ class PatientAddressCard extends StatelessWidget {
           ),
           Container(
               width: cardWidth * 0.8,
-              child: GestureDetector(
-                onTap: isToAdd || isToUpdate
-                    ? () async {
-                        final latLng = await selectLatLng(context);
-                        dataModel.currentPatient.address =
-                            "${latLng.latitude}, ${latLng.longitude}";
-                        dataModel.currentPatient = dataModel.currentPatient;
-                      }
-                    : null,
-                child: FalseTextField(
-                  labelText: "Dirección",
-                  initialValue: dataModel.currentPatient.address,
-                ),
+              child: FalseTextField(
+                labelText: "Dirección",
+                initialValue: dataModel.currentPatient.address,
               )),
           SizedBox(
             height: cardWidth * 0.02,
@@ -755,9 +745,13 @@ class CarerAddressCard extends StatelessWidget {
   const CarerAddressCard({
     Key key,
     @required this.cardWidth,
+    this.isToAdd = false,
+    this.isToUpdate = false,
   }) : super(key: key);
 
   final double cardWidth;
+  final bool isToAdd;
+  final bool isToUpdate;
 
   @override
   Widget build(BuildContext context) {
@@ -788,9 +782,19 @@ class CarerAddressCard extends StatelessWidget {
           ),
           Container(
             width: cardWidth * 0.8,
-            child: FalseTextField(
-              initialValue: dataModel.currentCarer.carerOnMap,
-              labelText: "Ubicación del cuidador",
+            child: GestureDetector(
+              onTap: isToAdd || isToUpdate
+                  ? () async {
+                      final latLng = await selectLatLng(context);
+                      dataModel.currentCarer.carerOnMap =
+                          "${latLng.latitude}, ${latLng.longitude}";
+                      dataModel.currentCarer = dataModel.currentCarer;
+                    }
+                  : null,
+              child: FalseTextField(
+                initialValue: dataModel.currentCarer.carerOnMap,
+                labelText: "Ubicación del cuidador",
+              ),
             ),
           ),
           SizedBox(
@@ -798,9 +802,19 @@ class CarerAddressCard extends StatelessWidget {
           ),
           Container(
             width: cardWidth * 0.8,
-            child: FalseTextField(
-              initialValue: dataModel.currentCarer.carerRoadOnMap,
-              labelText: "Ubicación de la entrada por carretera",
+            child: GestureDetector(
+              onTap: isToAdd || isToUpdate
+                  ? () async {
+                      final latLng = await selectLatLng(context);
+                      dataModel.currentCarer.carerRoadOnMap =
+                          "${latLng.latitude}, ${latLng.longitude}";
+                      dataModel.currentCarer = dataModel.currentCarer;
+                    }
+                  : null,
+              child: FalseTextField(
+                initialValue: dataModel.currentCarer.carerRoadOnMap,
+                labelText: "Ubicación de la entrada por carretera",
+              ),
             ),
           ),
           SizedBox(

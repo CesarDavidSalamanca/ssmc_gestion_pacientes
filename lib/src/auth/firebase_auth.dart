@@ -1,8 +1,8 @@
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
-// final FirebaseAuth _auth = FirebaseAuth.instance;
+final FirebaseAuth _auth = FirebaseAuth.instance;
 
 Future<String> registerUserWithFirebase(
     {@required String email,
@@ -41,25 +41,41 @@ Future<String> signIn(
     {@required String email, @required String password}) async {
   try {
     String _login = "";
-    // UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-    //     email: email, password: password);
-    // if (userCredential.user.email != null && userCredential.user.uid != null) {
-    //   //save info on phone
-    //   _login = "Credenciales correctas";
-    // }
+    UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+        email: email, password: password);
+    if (userCredential.user.email != null && userCredential.user.uid != null) {
+      //save info on phone
+      if (email.contains("observatoriosmcajamarca"))
+        userCredential.user
+            .updateDisplayName("Observatorio Municipal de Cajamarca");
+      else {
+        userCredential.user.updateDisplayName("Hospital Santa Lucia");
+      }
+      _login = "Credenciales correctas";
+    }
     return _login;
-  } on Exception catch (errorInAuth) {
-    // if (errorInAuth.code == "user-not-found") {
-    //   return "Usuario no registrado";
-    // } else if (errorInAuth.code == "wrong-password") {
-    //   return "Contraseña incorrecta";
-    // } else {
-    //   return errorInAuth.code;
-    // }
+  } on FirebaseAuthException catch (errorInAuth) {
+    if (errorInAuth.code == "user-not-found") {
+      return "Usuario no registrado";
+    } else if (errorInAuth.code == "wrong-password") {
+      return "Contraseña incorrecta";
+    } else {
+      return errorInAuth.code;
+    }
   }
 }
 
+String getUserEmail() {
+  return _auth.currentUser == null ? "null email" : _auth.currentUser.email;
+}
+
+String getUserName() {
+  return _auth.currentUser == null
+      ? "null displayName"
+      : _auth.currentUser.displayName;
+}
+
 Future<void> signOut() async {
-  // _auth.signOut();
+  _auth.signOut();
   return null;
 }

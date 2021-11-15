@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ssmc_gestion_pacientes/src/auth/firebase_auth.dart';
 import 'package:ssmc_gestion_pacientes/src/patient/ui/pages/locate_patient_page.dart';
 import 'package:ssmc_gestion_pacientes/src/routes/routes.dart';
 import 'package:ssmc_gestion_pacientes/src/theme/theme.dart';
@@ -30,12 +31,12 @@ class MenuPrincipal extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Hospital Santa Lucia",
+                          getUserName(),
                           textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 24),
                         ),
                         Text(
-                          "hospitalsantalucia@email.com",
+                          getUserEmail(),
                           textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 15),
                         ),

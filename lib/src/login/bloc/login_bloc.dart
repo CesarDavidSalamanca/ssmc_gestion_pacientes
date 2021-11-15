@@ -31,35 +31,31 @@ class LoginBloc with Validators implements Bloc {
     _passwordController?.close();
   }
 
-  Future<bool> loginAccess(Function onUnauthorized, Function onFailure) async {
+  Future<bool> loginAccess(Function(String message) onFailure) async {
     if (this._emailController.hasValue && this._passwordController.hasValue) {
       try {
         bool _login = false;
-        // String response = await signIn(
-        //     email: this._emailController.value,
-        //     password: this._passwordController.value);
-        // final DatabaseReference _usersRef =
-        //     FirebaseDatabase.instance.reference().child('users');
-        // final users = await _usersRef.get();
-        // users.value.forEach((userCode, userData) {
-        //   if (userData["email"] == this._emailController.value) {
-        //     //setear user data in sharedPreferences
-        //     print("user coincide");
-        //   }
-        // });
-        _login = true;
-        // if (response == "Credenciales correctas") _login = true;
+        String response = await signIn(
+            email: this._emailController.value,
+            password: this._passwordController.value);
+
+        if (response == "Credenciales correctas") {
+          _login = true;
+        } else {
+          onFailure("Correo electrónico o contraseña incorrectos ");
+        }
         return _login;
       } on Exception catch (e) {
         if ('$e'.contains("Unauthorized")) {
-          onUnauthorized();
+          onFailure("Correo electrónico o contraseña incorrectos");
         } else {
-          onFailure();
+          onFailure("Ha ocurrido un error inesperado");
         }
         return false;
       }
     } else {
       //Debe llenar todos los campos
+      onFailure("Debe llenar todos los campos");
       return false;
     }
   }
