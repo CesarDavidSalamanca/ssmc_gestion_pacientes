@@ -76,6 +76,7 @@ class SearchCard extends StatelessWidget {
               child: Text(
                 "Buscar paciente",
                 textAlign: TextAlign.center,
+                style: TextStyle(fontSize: cardWidth * 0.0425),
               )),
           Container(
             width: cardWidth * 0.8,

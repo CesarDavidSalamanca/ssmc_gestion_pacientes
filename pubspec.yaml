@@ -34,6 +34,9 @@ dependencies:
   generic_bloc_provider: ^1.1.0
   rxdart: ^0.27.2
   flutter_svg: ^0.22.0
+  google_maps_flutter: ^2.0.9
+  google_maps_flutter_web: ^0.3.2
+  flutter_polyline_points: ^1.0.0
   # firebase_auth: ^3.1.1
   # firebase_core: ^1.6.0
   # firebase_database: ^8.0.0

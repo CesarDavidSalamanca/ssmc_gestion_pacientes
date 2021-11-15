@@ -91,7 +91,7 @@ class _PortraitView extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: width * 0.4),
+                SizedBox(height: width * 0.3),
                 Text(
                   "Observatorio municipal de salud mental de Cajamarca",
                   textAlign: TextAlign.center,
@@ -246,7 +246,7 @@ class __CardLoginState extends State<_CardLogin> {
           SizedBox(height: width * 0.06),
           Container(
             width: width,
-            height: width * 0.1,
+            height: width * 0.08,
             child: ButtonRounded(
               onTap: () async {
                 final response = await loginBloc.loginAccess(() {}, () {});
@@ -254,10 +254,10 @@ class __CardLoginState extends State<_CardLogin> {
                   Navigator.popAndPushNamed(context, LauncherPage.pageRoute);
               },
               text: 'Ingresar',
-              fontSize: width * 0.05,
+              fontSize: width * 0.045,
             ),
           ),
-          SizedBox(height: width * 0.08),
+          // SizedBox(height: width * 0.08),
           // Container(
           //   width: width,
           //   height: width * 0.1,

@@ -6,6 +6,7 @@ import 'package:ssmc_gestion_pacientes/src/patient/model/carer.dart';
 import 'package:ssmc_gestion_pacientes/src/patient/model/patient.dart';
 import 'package:ssmc_gestion_pacientes/src/theme/theme.dart';
 import 'package:ssmc_gestion_pacientes/src/widgets/buttons.dart';
+import 'package:ssmc_gestion_pacientes/src/widgets/google_maps.dart';
 import 'package:ssmc_gestion_pacientes/src/widgets/textfields.dart';
 
 class SearchPatientCards extends StatefulWidget {
@@ -62,7 +63,10 @@ class _SearchPatientCardsState extends State<SearchPatientCards>
                     SizedBox(height: cardWidth * 0.025),
                     PatientInfoCard(cardWidth: cardWidth),
                     SizedBox(height: cardWidth * 0.025),
-                    PatientAddressCard(cardWidth: cardWidth),
+                    PatientAddressCard(
+                        cardWidth: cardWidth,
+                        isToAdd: widget.isToAdd,
+                        isToUpdate: widget.isUpdate),
                     SizedBox(height: cardWidth * 0.025),
                     if (widget.isUpdate)
                       Container(
@@ -152,7 +156,11 @@ class _SearchPatientCardsState extends State<SearchPatientCards>
                           SizedBox(height: cardWidth * 0.025),
                           PatientInfoCard(cardWidth: cardWidth),
                           SizedBox(height: cardWidth * 0.025),
-                          PatientAddressCard(cardWidth: cardWidth),
+                          PatientAddressCard(
+                            cardWidth: cardWidth,
+                            isToAdd: widget.isToAdd,
+                            isToUpdate: widget.isUpdate,
+                          ),
                           SizedBox(height: cardWidth * 0.025),
                           if (widget.isUpdate)
                             Container(
@@ -460,9 +468,13 @@ class PatientAddressCard extends StatelessWidget {
   const PatientAddressCard({
     Key key,
     @required this.cardWidth,
+    this.isToAdd = false,
+    this.isToUpdate = false,
   }) : super(key: key);
 
   final double cardWidth;
+  final bool isToAdd;
+  final bool isToUpdate;
 
   @override
   Widget build(BuildContext context) {
@@ -484,18 +496,38 @@ class PatientAddressCard extends StatelessWidget {
           ),
           Container(
               width: cardWidth * 0.8,
-              child: FalseTextField(
-                labelText: "Dirección",
-                initialValue: dataModel.currentPatient.address,
+              child: GestureDetector(
+                onTap: isToAdd || isToUpdate
+                    ? () async {
+                        final latLng = await selectLatLng(context);
+                        dataModel.currentPatient.address =
+                            "${latLng.latitude}, ${latLng.longitude}";
+                        dataModel.currentPatient = dataModel.currentPatient;
+                      }
+                    : null,
+                child: FalseTextField(
+                  labelText: "Dirección",
+                  initialValue: dataModel.currentPatient.address,
+                ),
               )),
           SizedBox(
             height: cardWidth * 0.02,
           ),
           Container(
             width: cardWidth * 0.8,
-            child: FalseTextField(
-              initialValue: dataModel.currentPatient.carerOnMap,
-              labelText: "Ubicación del paciente",
+            child: GestureDetector(
+              onTap: isToAdd || isToUpdate
+                  ? () async {
+                      final latLng = await selectLatLng(context);
+                      dataModel.currentPatient.carerOnMap =
+                          "${latLng.latitude}, ${latLng.longitude}";
+                      dataModel.currentPatient = dataModel.currentPatient;
+                    }
+                  : null,
+              child: FalseTextField(
+                initialValue: dataModel.currentPatient.carerOnMap,
+                labelText: "Ubicación del paciente",
+              ),
             ),
           ),
           SizedBox(
@@ -503,9 +535,19 @@ class PatientAddressCard extends StatelessWidget {
           ),
           Container(
             width: cardWidth * 0.8,
-            child: FalseTextField(
-              initialValue: dataModel.currentPatient.carerRoadOnMap,
-              labelText: "Ubicación de la entrada por carretera",
+            child: GestureDetector(
+              onTap: isToAdd || isToUpdate
+                  ? () async {
+                      final latLng = await selectLatLng(context);
+                      dataModel.currentPatient.carerRoadOnMap =
+                          "${latLng.latitude}, ${latLng.longitude}";
+                      dataModel.currentPatient = dataModel.currentPatient;
+                    }
+                  : null,
+              child: FalseTextField(
+                initialValue: dataModel.currentPatient.carerRoadOnMap,
+                labelText: "Ubicación de la entrada por carretera",
+              ),
             ),
           ),
           SizedBox(
