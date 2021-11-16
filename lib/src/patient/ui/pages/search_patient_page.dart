@@ -3,7 +3,6 @@ import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:ssmc_gestion_pacientes/src/patient/bloc/search_patient_bloc.dart';
 import 'package:ssmc_gestion_pacientes/src/patient/ui/widgets/patient_info_detail_cards.dart';
-import 'package:ssmc_gestion_pacientes/src/widgets/google_maps.dart';
 
 class SearchPatientPage extends StatefulWidget {
   @override
@@ -25,8 +24,8 @@ class _SearchPatientPageState extends State<SearchPatientPage> {
     double width = MediaQuery.of(context).size.width;
     if (firstBuild) {
       firstBuild = false;
-      locatePatientBloc = SearchPatientBloc();
       dataModel = DataModel();
+      locatePatientBloc = SearchPatientBloc(dataModel);
     }
     return BlocProvider(
       bloc: locatePatientBloc,

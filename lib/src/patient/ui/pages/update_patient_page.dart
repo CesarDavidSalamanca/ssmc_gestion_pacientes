@@ -24,8 +24,8 @@ class _UpdatePatientPageState extends State<UpdatePatientPage> {
     double width = MediaQuery.of(context).size.width;
     if (firstBuild) {
       firstBuild = false;
-      locatePatientBloc = SearchPatientBloc();
       dataModel = DataModel();
+      locatePatientBloc = SearchPatientBloc(dataModel);
     }
     return BlocProvider(
       bloc: locatePatientBloc,

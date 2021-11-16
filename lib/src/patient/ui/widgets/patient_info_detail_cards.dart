@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:ssmc_gestion_pacientes/src/patient/bloc/carer_info_bloc.dart';
 import 'package:ssmc_gestion_pacientes/src/patient/bloc/search_patient_bloc.dart';
 import 'package:ssmc_gestion_pacientes/src/patient/model/carer.dart';
 import 'package:ssmc_gestion_pacientes/src/patient/model/patient.dart';
@@ -57,11 +58,20 @@ class _SearchPatientCardsState extends State<SearchPatientCards>
                 Column(
                   children: [
                     SizedBox(height: cardWidth * 0.05),
-                    SearchCard(cardWidth: cardWidth),
+                    SearchCard(
+                        cardWidth: cardWidth,
+                        isToAdd: widget.isToAdd,
+                        isToUpdate: widget.isUpdate),
                     SizedBox(height: cardWidth * 0.025),
-                    PatientDataCard(cardWidth: cardWidth),
+                    PatientDataCard(
+                        cardWidth: cardWidth,
+                        isToAdd: widget.isToAdd,
+                        isToUpdate: widget.isUpdate),
                     SizedBox(height: cardWidth * 0.025),
-                    PatientInfoCard(cardWidth: cardWidth),
+                    PatientInfoCard(
+                        cardWidth: cardWidth,
+                        isToAdd: widget.isToAdd,
+                        isToUpdate: widget.isUpdate),
                     SizedBox(height: cardWidth * 0.025),
                     PatientAddressCard(
                         cardWidth: cardWidth,
@@ -93,13 +103,25 @@ class _SearchPatientCardsState extends State<SearchPatientCards>
                 Column(
                   children: [
                     SizedBox(height: cardWidth * 0.05),
-                    CarerIdentifiedCard(cardWidth: cardWidth),
+                    CarerIdentifiedCard(
+                        cardWidth: cardWidth,
+                        isToAdd: widget.isToAdd,
+                        isToUpdate: widget.isUpdate),
                     SizedBox(height: cardWidth * 0.025),
-                    CarerNameCard(cardWidth: cardWidth),
+                    CarerNameCard(
+                        cardWidth: cardWidth,
+                        isToAdd: widget.isToAdd,
+                        isToUpdate: widget.isUpdate),
                     SizedBox(height: cardWidth * 0.025),
-                    CarerInfoCard(cardWidth: cardWidth),
+                    CarerInfoCard(
+                        cardWidth: cardWidth,
+                        isToAdd: widget.isToAdd,
+                        isToUpdate: widget.isUpdate),
                     SizedBox(height: cardWidth * 0.025),
-                    CarerAddressCard(cardWidth: cardWidth),
+                    CarerAddressCard(
+                        cardWidth: cardWidth,
+                        isToAdd: widget.isToAdd,
+                        isToUpdate: widget.isUpdate),
                     SizedBox(height: cardWidth * 0.025),
                     if (widget.isUpdate)
                       Container(
@@ -150,17 +172,25 @@ class _SearchPatientCardsState extends State<SearchPatientCards>
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           SizedBox(height: cardWidth * 0.025),
-                          SearchCard(cardWidth: cardWidth),
+                          SearchCard(
+                              cardWidth: cardWidth,
+                              isToAdd: widget.isToAdd,
+                              isToUpdate: widget.isUpdate),
                           SizedBox(height: cardWidth * 0.025),
-                          PatientDataCard(cardWidth: cardWidth),
+                          PatientDataCard(
+                              cardWidth: cardWidth,
+                              isToAdd: widget.isToAdd,
+                              isToUpdate: widget.isUpdate),
                           SizedBox(height: cardWidth * 0.025),
-                          PatientInfoCard(cardWidth: cardWidth),
+                          PatientInfoCard(
+                              cardWidth: cardWidth,
+                              isToAdd: widget.isToAdd,
+                              isToUpdate: widget.isUpdate),
                           SizedBox(height: cardWidth * 0.025),
                           PatientAddressCard(
-                            cardWidth: cardWidth,
-                            isToAdd: widget.isToAdd,
-                            isToUpdate: widget.isUpdate,
-                          ),
+                              cardWidth: cardWidth,
+                              isToAdd: widget.isToAdd,
+                              isToUpdate: widget.isUpdate),
                           SizedBox(height: cardWidth * 0.025),
                           if (widget.isUpdate)
                             Container(
@@ -190,13 +220,25 @@ class _SearchPatientCardsState extends State<SearchPatientCards>
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           SizedBox(height: cardWidth * 0.025),
-                          CarerIdentifiedCard(cardWidth: cardWidth),
+                          CarerIdentifiedCard(
+                              cardWidth: cardWidth,
+                              isToAdd: widget.isToAdd,
+                              isToUpdate: widget.isUpdate),
                           SizedBox(height: cardWidth * 0.025),
-                          CarerNameCard(cardWidth: cardWidth),
+                          CarerNameCard(
+                              cardWidth: cardWidth,
+                              isToAdd: widget.isToAdd,
+                              isToUpdate: widget.isUpdate),
                           SizedBox(height: cardWidth * 0.025),
-                          CarerInfoCard(cardWidth: cardWidth),
+                          CarerInfoCard(
+                              cardWidth: cardWidth,
+                              isToAdd: widget.isToAdd,
+                              isToUpdate: widget.isUpdate),
                           SizedBox(height: cardWidth * 0.025),
-                          CarerAddressCard(cardWidth: cardWidth),
+                          CarerAddressCard(
+                              cardWidth: cardWidth,
+                              isToAdd: widget.isToAdd,
+                              isToUpdate: widget.isUpdate),
                           SizedBox(height: cardWidth * 0.025),
                           if (widget.isUpdate)
                             Container(
@@ -233,9 +275,13 @@ class SearchCard extends StatelessWidget {
   const SearchCard({
     Key key,
     @required this.cardWidth,
+    this.isToAdd = false,
+    this.isToUpdate = false,
   }) : super(key: key);
 
   final double cardWidth;
+  final bool isToAdd;
+  final bool isToUpdate;
 
   @override
   Widget build(BuildContext context) {
@@ -296,7 +342,7 @@ class SearchCard extends StatelessWidget {
             height: cardWidth * 0.08,
             child: ButtonRounded(
                 text: "Buscar",
-                onTap: () {
+                onTap: () async {
                   DataModel dataModel =
                       Provider.of<DataModel>(context, listen: false);
                   dataModel.currentPatient = Patient(
@@ -343,9 +389,13 @@ class PatientDataCard extends StatelessWidget {
   const PatientDataCard({
     Key key,
     @required this.cardWidth,
+    this.isToAdd = false,
+    this.isToUpdate = false,
   }) : super(key: key);
 
   final double cardWidth;
+  final bool isToAdd;
+  final bool isToUpdate;
 
   @override
   Widget build(BuildContext context) {
@@ -366,25 +416,48 @@ class PatientDataCard extends StatelessWidget {
           SizedBox(height: cardWidth * 0.02),
           Container(
               width: cardWidth * 0.8,
-              child: FalseTextField(
-                labelText: "Nombres",
-                initialValue: dataModel.currentPatient.name,
-              )),
+              child: isToAdd || isToUpdate
+                  ? StreamTextField(
+                      textStream: locatePatientBloc.nameStream,
+                      changeStream: locatePatientBloc.changeName,
+                      labelText: "Nombres",
+                      initialValue: dataModel.currentPatient.name)
+                  : FalseTextField(
+                      labelText: "Nombres",
+                      initialValue: dataModel.currentPatient.name,
+                    )),
           SizedBox(height: cardWidth * 0.02),
           Container(
             width: cardWidth * 0.8,
-            child: FalseTextField(
-              initialValue: dataModel.currentPatient.illness,
-              labelText: "Parentesco",
-            ),
+            child: isToAdd || isToUpdate
+                ? StreamTextField(
+                    textStream: locatePatientBloc.ilnessStream,
+                    changeStream: locatePatientBloc.changeIlness,
+                    labelText: "Enfermedad registrada",
+                    initialValue: dataModel.currentPatient.illness)
+                : FalseTextField(
+                    initialValue: dataModel.currentPatient.illness,
+                    labelText: "Enfermedad registrada",
+                  ),
           ),
           SizedBox(height: cardWidth * 0.02),
           Container(
             width: cardWidth * 0.8,
-            child: FalseTextField(
-              initialValue: dataModel.currentPatient.zone,
-              labelText: "Zona",
-            ),
+            child: isToAdd || isToUpdate
+                ? StreamDropDown(
+                    textStream: locatePatientBloc.zoneStream,
+                    changeStream: locatePatientBloc.changeZone,
+                    labelText: "Zona",
+                    initialValue: dataModel.currentPatient.zone,
+                    dropDownElements: [
+                      DropDownElement(label: "Urbana", text: "Urbana"),
+                      DropDownElement(label: "Rural", text: "Rural"),
+                    ],
+                  )
+                : FalseTextField(
+                    initialValue: dataModel.currentPatient.zone,
+                    labelText: "Zona",
+                  ),
           ),
           SizedBox(height: cardWidth * 0.02),
         ],
@@ -397,14 +470,21 @@ class PatientInfoCard extends StatelessWidget {
   const PatientInfoCard({
     Key key,
     @required this.cardWidth,
+    this.isToAdd = false,
+    this.isToUpdate = false,
   }) : super(key: key);
 
   final double cardWidth;
+  final bool isToAdd;
+  final bool isToUpdate;
 
   @override
   Widget build(BuildContext context) {
     final dataModel = Provider.of<DataModel>(context);
     final currentTheme = Provider.of<ThemeChanger>(context).currentTheme;
+
+    final patientBloc =
+        BlocProvider.of<SearchPatientBloc>(context).aditionalPatientInfoBloc;
     return Container(
       width: cardWidth,
       height: cardWidth * 0.75,
@@ -421,39 +501,71 @@ class PatientInfoCard extends StatelessWidget {
           ),
           Container(
               width: cardWidth * 0.8,
-              child: FalseTextField(
-                labelText: "Fecha de nacimiento",
-                initialValue: dataModel.currentPatient.birthdate.toString(),
-              )),
+              child: isToAdd || isToUpdate
+                  ? StreamTextFieldDate(
+                      textStream: patientBloc.birthdateStream,
+                      changeStream: patientBloc.changebirthdate,
+                      labelText: "Fecha de nacimiento",
+                      hintText: 'DD/MM/AA',
+                    )
+                  : FalseTextField(
+                      labelText: "Fecha de nacimiento",
+                      initialValue:
+                          dataModel.currentPatient.birthdate.toString(),
+                    )),
           SizedBox(
             height: cardWidth * 0.02,
           ),
           Container(
             width: cardWidth * 0.8,
-            child: FalseTextField(
-              initialValue: dataModel.currentPatient.eps,
-              labelText: "Eps",
-            ),
+            child: isToAdd || isToUpdate
+                ? StreamTextField(
+                    textStream: patientBloc.epsStream,
+                    changeStream: patientBloc.changeeps,
+                    labelText: "Eps",
+                    initialValue: dataModel.currentPatient.eps)
+                : FalseTextField(
+                    initialValue: dataModel.currentPatient.eps,
+                    labelText: "Eps",
+                  ),
           ),
           SizedBox(
             height: cardWidth * 0.02,
           ),
           Container(
             width: cardWidth * 0.8,
-            child: FalseTextField(
-              initialValue: dataModel.currentPatient.typeAfiliation,
-              labelText: "Tipo de afiliación",
-            ),
+            child: isToAdd || isToUpdate
+                ? StreamDropDown(
+                    textStream: patientBloc.afiliationTypeStream,
+                    changeStream: patientBloc.changeafiliationType,
+                    labelText: "Tipo de afiliación",
+                    initialValue: dataModel.currentPatient.typeAfiliation,
+                    dropDownElements: [
+                      DropDownElement(
+                          label: "Contributivo", text: "Contributivo"),
+                      DropDownElement(label: "Subsidiado", text: "Subsidiado"),
+                    ],
+                  )
+                : FalseTextField(
+                    initialValue: dataModel.currentPatient.typeAfiliation,
+                    labelText: "Tipo de afiliación",
+                  ),
           ),
           SizedBox(
             height: cardWidth * 0.02,
           ),
           Container(
             width: cardWidth * 0.8,
-            child: FalseTextField(
-              initialValue: dataModel.currentPatient.civilState,
-              labelText: "Estado civil",
-            ),
+            child: isToAdd || isToUpdate
+                ? StreamTextField(
+                    textStream: patientBloc.civilStateStream,
+                    changeStream: patientBloc.changecivilState,
+                    labelText: "Estado civil",
+                    initialValue: dataModel.currentPatient.civilState)
+                : FalseTextField(
+                    initialValue: dataModel.currentPatient.civilState,
+                    labelText: "Estado civil",
+                  ),
           ),
           SizedBox(
             height: cardWidth * 0.04,
@@ -480,6 +592,9 @@ class PatientAddressCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final dataModel = Provider.of<DataModel>(context);
     final currentTheme = Provider.of<ThemeChanger>(context).currentTheme;
+
+    final patientBloc =
+        BlocProvider.of<SearchPatientBloc>(context).addressPatientInfoBloc;
     return Container(
       width: cardWidth,
       height: cardWidth * 0.75,
@@ -496,10 +611,16 @@ class PatientAddressCard extends StatelessWidget {
           ),
           Container(
               width: cardWidth * 0.8,
-              child: FalseTextField(
-                labelText: "Dirección",
-                initialValue: dataModel.currentPatient.address,
-              )),
+              child: isToAdd || isToUpdate
+                  ? StreamTextField(
+                      textStream: patientBloc.addressStream,
+                      changeStream: patientBloc.changeaddress,
+                      labelText: "Dirección",
+                      initialValue: dataModel.currentPatient.address)
+                  : FalseTextField(
+                      labelText: "Dirección",
+                      initialValue: dataModel.currentPatient.address,
+                    )),
           SizedBox(
             height: cardWidth * 0.02,
           ),
@@ -563,14 +684,20 @@ class CarerIdentifiedCard extends StatelessWidget {
   const CarerIdentifiedCard({
     Key key,
     @required this.cardWidth,
+    this.isToAdd = false,
+    this.isToUpdate = false,
   }) : super(key: key);
 
   final double cardWidth;
+  final bool isToAdd;
+  final bool isToUpdate;
 
   @override
   Widget build(BuildContext context) {
     final dataModel = Provider.of<DataModel>(context);
     final currentTheme = Provider.of<ThemeChanger>(context).currentTheme;
+
+    final carerBloc = BlocProvider.of<SearchPatientBloc>(context).carerInfoBloc;
     return Container(
       width: cardWidth,
       height: cardWidth * 0.55,
@@ -591,19 +718,42 @@ class CarerIdentifiedCard extends StatelessWidget {
               )),
           Container(
               width: cardWidth * 0.8,
-              child: FalseTextField(
-                labelText: "Tipo de documento",
-                initialValue: dataModel._currentCarer.typeDoc,
-              )),
+              child: isToAdd || isToUpdate
+                  ? StreamDropDown(
+                      textStream: carerBloc.typeDocumentStream,
+                      changeStream: carerBloc.changeTypeDocument,
+                      initialValue: dataModel.currentCarer.typeDoc,
+                      labelText: "Tipo de documento",
+                      dropDownElements: [
+                          DropDownElement(
+                              label: "Cédula de ciudadania",
+                              text: "Cédula de ciudadania"),
+                          DropDownElement(
+                              label: "Tarjeta de identidad",
+                              text: "Tarjeta de identidad"),
+                          DropDownElement(
+                              label: "Cédula de extranjería",
+                              text: "Cédula de extranjería"),
+                        ])
+                  : FalseTextField(
+                      labelText: "Tipo de documento",
+                      initialValue: dataModel._currentCarer.typeDoc,
+                    )),
           SizedBox(
             height: cardWidth * 0.02,
           ),
           Container(
             width: cardWidth * 0.8,
-            child: FalseTextField(
-              initialValue: dataModel.currentPatient.doc,
-              labelText: "Documento",
-            ),
+            child: isToAdd || isToUpdate
+                ? StreamTextField(
+                    textStream: carerBloc.documentStream,
+                    changeStream: carerBloc.changeDocument,
+                    labelText: "Documento",
+                    initialValue: dataModel.currentCarer.doc)
+                : FalseTextField(
+                    initialValue: dataModel.currentPatient.doc,
+                    labelText: "Documento",
+                  ),
           ),
           SizedBox(
             height: cardWidth * 0.04,
@@ -621,14 +771,20 @@ class CarerNameCard extends StatelessWidget {
   const CarerNameCard({
     Key key,
     @required this.cardWidth,
+    this.isToAdd = false,
+    this.isToUpdate = false,
   }) : super(key: key);
 
   final double cardWidth;
+  final bool isToAdd;
+  final bool isToUpdate;
 
   @override
   Widget build(BuildContext context) {
     final dataModel = Provider.of<DataModel>(context);
     final currentTheme = Provider.of<ThemeChanger>(context).currentTheme;
+
+    final carerBloc = BlocProvider.of<SearchPatientBloc>(context).carerInfoBloc;
     return Container(
       width: cardWidth,
       height: cardWidth * 0.55,
@@ -643,25 +799,48 @@ class CarerNameCard extends StatelessWidget {
           SizedBox(height: cardWidth * 0.02),
           Container(
               width: cardWidth * 0.8,
-              child: FalseTextField(
-                labelText: "Nombres",
-                initialValue: dataModel.currentCarer.name,
-              )),
+              child: isToAdd || isToUpdate
+                  ? StreamTextField(
+                      textStream: carerBloc.nameStream,
+                      changeStream: carerBloc.changeName,
+                      labelText: "Nombres",
+                      initialValue: dataModel.currentCarer.name)
+                  : FalseTextField(
+                      labelText: "Nombres",
+                      initialValue: dataModel.currentCarer.name,
+                    )),
           SizedBox(height: cardWidth * 0.02),
           Container(
             width: cardWidth * 0.8,
-            child: FalseTextField(
-              initialValue: dataModel.currentCarer.relationship,
-              labelText: "Parentesco",
-            ),
+            child: isToAdd || isToUpdate
+                ? StreamTextField(
+                    textStream: carerBloc.relationshipStream,
+                    changeStream: carerBloc.changerelationship,
+                    labelText: "Parentesco",
+                    initialValue: dataModel.currentCarer.relationship)
+                : FalseTextField(
+                    initialValue: dataModel.currentCarer.relationship,
+                    labelText: "Parentesco",
+                  ),
           ),
           SizedBox(height: cardWidth * 0.02),
           Container(
             width: cardWidth * 0.8,
-            child: FalseTextField(
-              initialValue: dataModel.currentCarer.zone,
-              labelText: "Zona",
-            ),
+            child: isToAdd || isToUpdate
+                ? StreamDropDown(
+                    textStream: carerBloc.zoneStream,
+                    changeStream: carerBloc.changeZone,
+                    labelText: "Zona",
+                    initialValue: dataModel.currentCarer.zone,
+                    dropDownElements: [
+                      DropDownElement(label: "Urbana", text: "Urbana"),
+                      DropDownElement(label: "Rural", text: "Rural"),
+                    ],
+                  )
+                : FalseTextField(
+                    initialValue: dataModel.currentCarer.zone,
+                    labelText: "Zona",
+                  ),
           ),
           SizedBox(height: cardWidth * 0.02),
         ],
@@ -674,14 +853,21 @@ class CarerInfoCard extends StatelessWidget {
   const CarerInfoCard({
     Key key,
     @required this.cardWidth,
+    this.isToAdd = false,
+    this.isToUpdate = false,
   }) : super(key: key);
 
   final double cardWidth;
+  final bool isToAdd;
+  final bool isToUpdate;
 
   @override
   Widget build(BuildContext context) {
     final dataModel = Provider.of<DataModel>(context);
     final currentTheme = Provider.of<ThemeChanger>(context).currentTheme;
+
+    final carerBloc =
+        BlocProvider.of<SearchPatientBloc>(context).aditionalCarerInfoBloc;
     return Container(
       width: cardWidth,
       height: cardWidth * 0.75,
@@ -698,39 +884,70 @@ class CarerInfoCard extends StatelessWidget {
           ),
           Container(
               width: cardWidth * 0.8,
-              child: FalseTextField(
-                labelText: "Fecha de nacimiento",
-                initialValue: dataModel.currentCarer.birthdate.toString(),
-              )),
+              child: isToAdd || isToUpdate
+                  ? StreamTextFieldDate(
+                      textStream: carerBloc.birthdateStream,
+                      changeStream: carerBloc.changebirthdate,
+                      labelText: "Fecha de nacimiento",
+                      hintText: 'DD/MM/AA',
+                    )
+                  : FalseTextField(
+                      labelText: "Fecha de nacimiento",
+                      initialValue: dataModel.currentCarer.birthdate.toString(),
+                    )),
           SizedBox(
             height: cardWidth * 0.02,
           ),
           Container(
             width: cardWidth * 0.8,
-            child: FalseTextField(
-              initialValue: dataModel.currentCarer.eps,
-              labelText: "Eps",
-            ),
+            child: isToAdd || isToUpdate
+                ? StreamTextField(
+                    textStream: carerBloc.epsStream,
+                    changeStream: carerBloc.changeeps,
+                    labelText: "Eps",
+                    initialValue: dataModel.currentCarer.eps)
+                : FalseTextField(
+                    initialValue: dataModel.currentCarer.eps,
+                    labelText: "Eps",
+                  ),
           ),
           SizedBox(
             height: cardWidth * 0.02,
           ),
           Container(
             width: cardWidth * 0.8,
-            child: FalseTextField(
-              initialValue: dataModel.currentCarer.typeAfiliation,
-              labelText: "Tipo de afiliación",
-            ),
+            child: isToAdd || isToUpdate
+                ? StreamDropDown(
+                    textStream: carerBloc.afiliationTypeStream,
+                    changeStream: carerBloc.changeafiliationType,
+                    labelText: "Tipo de afiliación",
+                    initialValue: dataModel.currentCarer.typeAfiliation,
+                    dropDownElements: [
+                      DropDownElement(
+                          label: "Contributivo", text: "Contributivo"),
+                      DropDownElement(label: "Subsidiado", text: "Subsidiado"),
+                    ],
+                  )
+                : FalseTextField(
+                    initialValue: dataModel.currentCarer.typeAfiliation,
+                    labelText: "Tipo de afiliación",
+                  ),
           ),
           SizedBox(
             height: cardWidth * 0.02,
           ),
           Container(
             width: cardWidth * 0.8,
-            child: FalseTextField(
-              initialValue: dataModel.currentCarer.civilState,
-              labelText: "Estado civil",
-            ),
+            child: isToAdd || isToUpdate
+                ? StreamTextField(
+                    textStream: carerBloc.civilStateStream,
+                    changeStream: carerBloc.changecivilState,
+                    labelText: "Estado civil",
+                    initialValue: dataModel.currentPatient.civilState)
+                : FalseTextField(
+                    initialValue: dataModel.currentCarer.civilState,
+                    labelText: "Estado civil",
+                  ),
           ),
           SizedBox(
             height: cardWidth * 0.04,
@@ -757,6 +974,9 @@ class CarerAddressCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final dataModel = Provider.of<DataModel>(context);
     final currentTheme = Provider.of<ThemeChanger>(context).currentTheme;
+
+    final patientBloc =
+        BlocProvider.of<SearchPatientBloc>(context).addressCarerInfoBloc;
     return Container(
       width: cardWidth,
       height: cardWidth * 0.75,
@@ -773,10 +993,16 @@ class CarerAddressCard extends StatelessWidget {
           ),
           Container(
               width: cardWidth * 0.8,
-              child: FalseTextField(
-                labelText: "Dirección",
-                initialValue: dataModel.currentCarer.address,
-              )),
+              child: isToAdd || isToUpdate
+                  ? StreamTextField(
+                      textStream: patientBloc.addressStream,
+                      changeStream: patientBloc.changeaddress,
+                      labelText: "Dirección",
+                      initialValue: dataModel.currentCarer.address)
+                  : FalseTextField(
+                      labelText: "Dirección",
+                      initialValue: dataModel.currentCarer.address,
+                    )),
           SizedBox(
             height: cardWidth * 0.02,
           ),

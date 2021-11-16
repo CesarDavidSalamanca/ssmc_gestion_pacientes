@@ -83,7 +83,7 @@ Future<LatLng> selectLatLng(BuildContext context) async {
               child: ButtonRounded(
                   text: "Aceptar",
                   onTap: () {
-                    Navigator.pop(context, LatLng(0.0, 0.0));
+                    Navigator.pop(context, LatLng(0.045, -0.47));
                   },
                   fontSize: width * 0.05),
             ),

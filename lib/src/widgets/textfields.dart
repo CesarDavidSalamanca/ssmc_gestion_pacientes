@@ -228,6 +228,152 @@ class DropDownElement {
   DropDownElement({this.text, this.label});
 }
 
+class StreamTextFieldDate extends StatelessWidget {
+  final Stream<int> textStream;
+  final Function(int) changeStream;
+  final String hintText;
+  final String labelText;
+  final String counterText;
+  final bool enable;
+  final String initialValue;
+  final String icon;
+  final TextInputType keyboardType;
+  final bool obscureText;
+  final FontWeight labelFontWeight;
+  final Stream<int> maxDateStream;
+  final Stream<int> minDateStream;
+
+  const StreamTextFieldDate(
+      {@required this.textStream,
+      @required this.changeStream,
+      this.hintText = '',
+      this.labelText = '',
+      this.counterText = '',
+      this.icon,
+      this.enable = true,
+      this.initialValue = "",
+      this.keyboardType,
+      this.obscureText = false,
+      this.labelFontWeight = FontWeight.w500,
+      this.maxDateStream,
+      this.minDateStream});
+
+  @override
+  Widget build(BuildContext context) {
+    final currentTheme = Provider.of<ThemeChanger>(context).currentTheme;
+    double width = MediaQuery.of(context).size.width;
+    if (width > 600) {
+      if (width > 900) {
+        width = ((width - 251) / 2) * 0.9;
+      } else
+        width = (width - 250) * 0.8;
+    } else {
+      width = width * 0.8;
+    }
+    final height = width * 0.16;
+    final maxWidth = height * 1.35;
+    final maxHeight = height * 0.75;
+
+    Widget button = Container(
+      // width: maxWidth,
+      height: maxHeight,
+      child: Row(
+        children: [
+          Container(
+            width: maxWidth * 0.45,
+            height: maxHeight,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  bottomLeft: Radius.circular(10),
+                ),
+                color: currentTheme.primaryColorLight,
+                boxShadow: [
+                  BoxShadow(
+                      color: currentTheme.dividerColor.withOpacity(0.5),
+                      blurRadius: height * 0.05,
+                      spreadRadius: height * 0.01)
+                ]),
+            child: StreamBuilder<int>(
+                stream: textStream,
+                builder: (context, snapshot) {
+                  return GestureDetector(
+                    onTap: () {
+                      showDatePicker(
+                              context: context,
+                              locale: const Locale("es", ""),
+                              initialDate: DateTime.fromMillisecondsSinceEpoch(
+                                  snapshot.data),
+                              firstDate: DateTime(1910),
+                              lastDate: DateTime.now())
+                          .then((value) {
+                        if (value != null)
+                          changeStream(value.millisecondsSinceEpoch);
+                      });
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(height * 0.1),
+                      child: SvgPicture.asset(
+                        icon == null ? "svg/calendar.svg" : icon,
+                        color: currentTheme.primaryColor,
+                      ),
+                    ),
+                  );
+                }),
+          ),
+        ],
+      ),
+    );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          labelText,
+          style: TextStyle(
+              fontSize: height * 0.19,
+              fontWeight: labelFontWeight,
+              color: currentTheme.dividerColor),
+        ),
+        SizedBox(
+          height: height * 0.075,
+        ),
+        StreamBuilder<int>(
+            stream: textStream,
+            initialData: DateTime.now().millisecondsSinceEpoch,
+            builder: (context, snapshot) {
+              DateTime date =
+                  DateTime.fromMillisecondsSinceEpoch(snapshot.data);
+              return Container(
+                child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Row(
+                      children: [
+                        button,
+                        Expanded(
+                          child: Container(
+                            height: maxHeight,
+                            decoration: BoxDecoration(
+                                color: currentTheme.secondaryHeaderColor,
+                                borderRadius: BorderRadius.only(
+                                    bottomRight: Radius.circular(7.5),
+                                    topRight: Radius.circular(7.5))),
+                            child: Center(
+                              child: Text(
+                                "${date.day}/${date.month}/${date.year}",
+                                style: TextStyle(fontSize: height * 0.19),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    )),
+              );
+            }),
+      ],
+    );
+  }
+}
+
 class StreamTextFieldWithCheckBox extends StatelessWidget {
   final Stream<String> textStream;
   final Function(String) changeStream;

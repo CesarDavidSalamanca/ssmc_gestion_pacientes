@@ -1,41 +1,62 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:ssmc_gestion_pacientes/src/patient/model/patient.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
-Future<String> registerUserWithFirebase(
-    {@required String email,
-    @required String phoneNumber,
-    @required String password,
-    @required String documentation,
-    @required String typeDocument,
-    @required String displayName}) async {
+Future<String> registerPatientWithFirebase({@required Patient patient}) async {
   try {
-    // UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
-    //     email: email, password: password);
-    // await userCredential.user.updateDisplayName(displayName);
-    // final DatabaseReference _usersRef =
-    //     FirebaseDatabase.instance.reference().child('users');
-    // _usersRef.push().set({
-    //   "name": displayName,
-    //   "phone": phoneNumber,
-    //   "type_document": typeDocument,
-    //   "password": password,
-    //   "email": email,
-    //   "documentation": documentation,
-    // });
-    return "Usuario creado";
-  } on /*FirebaseAuthException*/ Exception catch (errorInRegister) {
-    // if (errorInRegister.code == "weak-password") {
-    //   return "Introducir una contraseña más fuerte";
-    // } else if (errorInRegister.code == "email-already-in-use") {
-    //   return "Correo existente";
-    // } else {
-    //   return errorInRegister.code;
-    // }
+    // String isvalid = await validPatient(email, typeDocument, documentation);
+    String isvalid = "Ok";
+    if (isvalid == "Ok") {
+      final DatabaseReference _usersRef =
+          FirebaseDatabase.instance.reference().child('patient');
+      _usersRef.push().set({
+        "type_document": patient.typeDoc,
+        "documentation": patient.doc,
+        "name": patient.name,
+        "illness": patient.illness,
+        "zone": patient.zone,
+        "birthdate": patient.birthdate,
+        "eps": patient.eps,
+        "type_afiliation": patient.typeAfiliation,
+        "civil_state": patient.civilState,
+        "address": patient.address,
+        "adress_lat": patient.addressLat(),
+        "adress_lng": patient.addressLng(),
+        if (patient.zone == "rural") "road_lat": patient.roadLat(),
+        if (patient.zone == "rural") "road_lng": patient.roadLng(),
+        if (patient.zone == "rural") "time": patient.timeFromRoadToCarer,
+      });
+      return "Paciente creado";
+    }
+    return "Paciente existente";
+  } on Exception catch (errorInRegister) {
+    return errorInRegister.toString();
   }
 }
+// Future<String> validPatient( String docType, String doc) async {
+//   final DatabaseReference _usersRef =
+//       FirebaseDatabase.instance.reference().child('patient');
+//   final users = await _usersRef.get();
+//   String response = "Ok";
+//   users.value.forEach((userCode, userData) {
+//     if (_auth.currentUser == null ||
+//         userData["email"] != _auth.currentUser.email) {
+//       if (userData["email"] == email) {
+//         //setear user data in sharedPreferences
+//         // print("user coincide");
+//         response = "Correo existente";
+//       }
+//       if (userData["type_document"] == docType &&
+//           userData["documentation"] == doc) {
+//         response = "Documento existente";
+//       }
+//     }
+//   });
+//   return response;
+// }
 
 Future<String> signIn(
     {@required String email, @required String password}) async {

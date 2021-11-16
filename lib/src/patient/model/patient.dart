@@ -1,4 +1,5 @@
 class Patient {
+  String patientId;
   String typeDoc;
   String doc;
 
@@ -30,4 +31,19 @@ class Patient {
       this.timeFromRoadToCarer,
       this.typeAfiliation,
       this.zone});
+  double addressLat() {
+    return double.tryParse(carerOnMap.split(", ")[0]);
+  }
+
+  double addressLng() {
+    return double.tryParse(carerOnMap.split(", ")[1]);
+  }
+
+  double roadLat() {
+    return double.tryParse(carerRoadOnMap.split(", ")[0]);
+  }
+
+  double roadLng() {
+    return double.tryParse(carerRoadOnMap.split(", ")[1]);
+  }
 }

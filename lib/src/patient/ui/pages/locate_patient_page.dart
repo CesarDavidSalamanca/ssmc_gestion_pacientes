@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:ssmc_gestion_pacientes/src/patient/bloc/search_patient_bloc.dart';
 import 'package:ssmc_gestion_pacientes/src/patient/ui/widgets/patient_info_cards.dart';
+import 'package:ssmc_gestion_pacientes/src/patient/ui/widgets/patient_info_detail_cards.dart';
 import 'package:ssmc_gestion_pacientes/src/widgets/google_maps.dart';
 
 class LocatePatientPage extends StatefulWidget {
@@ -24,7 +25,7 @@ class _LocatePatientPageState extends State<LocatePatientPage> {
     double height = MediaQuery.of(context).size.height;
     if (firstBuild) {
       firstBuild = false;
-      locatePatientBloc = SearchPatientBloc();
+      locatePatientBloc = SearchPatientBloc(DataModel());
     }
     return BlocProvider(
       bloc: locatePatientBloc,
