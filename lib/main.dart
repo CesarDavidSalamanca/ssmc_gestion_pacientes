@@ -41,8 +41,8 @@ class MyApp extends StatelessWidget {
       supportedLocales: [const Locale('es'), const Locale('en')],
       locale: const Locale("es"),
       routes: routes,
-      // initialRoute: LoginPage.pageRoute,
-      initialRoute: LauncherPage.pageRoute,
+      initialRoute: LoginPage.pageRoute,
+      // initialRoute: LauncherPage.pageRoute,
     );
   }
 }
