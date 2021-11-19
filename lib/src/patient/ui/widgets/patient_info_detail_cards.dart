@@ -373,6 +373,16 @@ class SearchCard extends StatelessWidget {
                       typeAfiliation: "Contributivo",
                       typeDoc: "C.C",
                       zone: "Rural");
+                  locatePatientBloc.changeZone(dataModel.currentPatient.zone);
+                  locatePatientBloc.carerInfoBloc
+                      .changeTypeDocument(dataModel.currentCarer.typeDoc);
+                  locatePatientBloc.carerInfoBloc
+                      .changeZone(dataModel.currentCarer.zone);
+                  locatePatientBloc.aditionalPatientInfoBloc
+                      .changeafiliationType(
+                          dataModel.currentPatient.typeAfiliation);
+                  locatePatientBloc.aditionalCarerInfoBloc.changeafiliationType(
+                      dataModel.currentCarer.typeAfiliation);
                 },
                 fontSize: cardWidth * 0.04),
           ),
