@@ -5,7 +5,8 @@ import 'package:ssmc_gestion_pacientes/src/patient/model/patient.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
-Future<String> registerPatientWithFirebase({@required Patient patient}) async {
+Future<String> registerPatientWithFirebaseAuth(
+    {@required Patient patient}) async {
   try {
     // String isvalid = await validPatient(email, typeDocument, documentation);
     String isvalid = "Ok";

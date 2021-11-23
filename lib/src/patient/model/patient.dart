@@ -46,4 +46,18 @@ class Patient {
   double roadLng() {
     return double.tryParse(carerRoadOnMap.split(", ")[1]);
   }
+
+  static Patient fromJson(json) => Patient(
+        name: json["name"] == null ? null : json["name"],
+        typeDoc: json["docType"] == null ? null : json["docType"],
+        doc: json["doc"] == null ? null : json["doc"],
+        illness: json["illness"] == null ? null : json["illness"],
+        zone: json["zone"] == null ? null : json["zone"],
+        birthdate: json["birthdate"] == null ? null : json["birthdate"],
+        eps: json["eps"] == null ? null : json["eps"],
+        typeAfiliation:
+            json["afiliationType"] == null ? null : json["afiliationType"],
+        civilState: json["civilState"] == null ? null : json["civilState"],
+        address: json["address"] == null ? null : json["address"],
+      );
 }

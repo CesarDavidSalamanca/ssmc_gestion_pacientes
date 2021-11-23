@@ -7,18 +7,17 @@ class ThemeChanger with ChangeNotifier {
   ThemeData _currentTheme;
 
   final _darkThemeData = ThemeData.dark().copyWith(
-    primaryColor: Color(0xff488704),
-    accentColor: Color(0xff4a6f2c),
-    primaryColorDark: Color(0xff4a6f2c),
-    primaryColorLight: Colors.grey[900],
-  );
+      primaryColor: Color(0xff488704),
+      accentColor: Color(0xff4a6f2c),
+      primaryColorDark: Color(0xff4a6f2c),
+      primaryColorLight: Colors.grey[900],
+      dividerColor: Colors.grey[100]);
   final _customThemeData = ThemeData.dark().copyWith();
   final _lightThemeData = ThemeData(
       primaryColor: Color(0xff488704),
       accentColor: Color(0xff4a6f2c),
       primaryColorDark: Color(0xff4a6f2c),
       primaryColorLight: Colors.white,
-      fontFamily: 'Montserrat',
       secondaryHeaderColor: Color(0xffF2F2F2),
       dividerColor: Color(0xff999999));
   // final _lightThemeData = ThemeData.light().copyWith(

@@ -93,7 +93,11 @@ class _SearchPatientCardsState extends State<SearchPatientCards>
                         height: cardWidth * 0.1,
                         child: ButtonRounded(
                             text: "Añadir Paciente",
-                            onTap: () {},
+                            onTap: () {
+                              final locatePatientBloc =
+                                  BlocProvider.of<SearchPatientBloc>(context);
+                              locatePatientBloc.insertPatient();
+                            },
                             fontSize: cardWidth * 0.05),
                       ),
                     if (widget.isUpdate || widget.isToAdd)
@@ -207,7 +211,12 @@ class _SearchPatientCardsState extends State<SearchPatientCards>
                               height: cardWidth * 0.1,
                               child: ButtonRounded(
                                   text: "Añadir Paciente",
-                                  onTap: () {},
+                                  onTap: () {
+                                    final locatePatientBloc =
+                                        BlocProvider.of<SearchPatientBloc>(
+                                            context);
+                                    locatePatientBloc.insertPatient();
+                                  },
                                   fontSize: cardWidth * 0.05),
                             ),
                           if (widget.isUpdate || widget.isToAdd)
@@ -345,34 +354,8 @@ class SearchCard extends StatelessWidget {
                 onTap: () async {
                   DataModel dataModel =
                       Provider.of<DataModel>(context, listen: false);
-                  dataModel.currentPatient = Patient(
-                      name: "Luis Espitia",
-                      address: "Cra 3 # 21-18",
-                      birthdate: DateTime.now().millisecondsSinceEpoch,
-                      carerOnMap: "1",
-                      carerRoadOnMap: "2",
-                      civilState: "Casado",
-                      doc: "1234",
-                      eps: "Sanitas",
-                      illness: "Depresión",
-                      timeFromRoadToCarer: "10 min",
-                      typeAfiliation: "Contributivo",
-                      typeDoc: "C.C",
-                      zone: "Rural");
-                  dataModel.currentCarer = Carer(
-                      name: "Carlos Espitia",
-                      address: "Cra 3 # 21-18",
-                      birthdate: DateTime.now().millisecondsSinceEpoch,
-                      carerOnMap: "1",
-                      carerRoadOnMap: "2",
-                      civilState: "Casado",
-                      doc: "1234",
-                      eps: "Sanitas",
-                      relationship: "Hermano",
-                      timeFromRoadToCarer: "10 min",
-                      typeAfiliation: "Contributivo",
-                      typeDoc: "C.C",
-                      zone: "Rural");
+                  dataModel.currentPatient =
+                      await locatePatientBloc.searchPatient();
                   locatePatientBloc.changeZone(dataModel.currentPatient.zone);
                   locatePatientBloc.carerInfoBloc
                       .changeTypeDocument(dataModel.currentCarer.typeDoc);

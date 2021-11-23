@@ -7,6 +7,7 @@ import 'package:ssmc_gestion_pacientes/src/patient/bloc/aditional_carer_info_blo
 import 'package:ssmc_gestion_pacientes/src/patient/bloc/aditional_patient_info_bloc.dart';
 import 'package:ssmc_gestion_pacientes/src/patient/bloc/carer_info_bloc.dart';
 import 'package:ssmc_gestion_pacientes/src/patient/model/patient.dart';
+import 'package:ssmc_gestion_pacientes/src/patient/repository/patient_repository.dart';
 import 'package:ssmc_gestion_pacientes/src/patient/ui/widgets/patient_info_detail_cards.dart';
 
 class SearchPatientBloc implements Bloc {
@@ -94,5 +95,11 @@ class SearchPatientBloc implements Bloc {
     final response = await registerPatientWithFirebase(patient: patient);
     print(response);
     return;
+  }
+
+  Future<Patient> searchPatient() async {
+    final response =
+        await getPatientWithFirebase(typeDoc: typeDocument, doc: document);
+    return response;
   }
 }
