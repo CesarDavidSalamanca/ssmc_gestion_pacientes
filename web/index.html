@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -26,49 +27,29 @@
   <title>ssmc_gestion_pacientes</title>
   <link rel="manifest" href="manifest.json">
 </head>
+
 <body>
   <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-auth.js"></script>
   <script>
     const firebaseConfig = {
-    apiKey: "AIzaSyAkf0sLPhiVIe3bMCtOAt2wn8WWtR_TEfA",
-    authDomain: "ssmc-gestion-pacientes-bf8eb.firebaseapp.com",
-    projectId: "ssmc-gestion-pacientes-bf8eb",
-    databaseURL: "https://ssmc-gestion-pacientes-bf8eb-default-rtdb.firebaseio.com",
-    storageBucket: "ssmc-gestion-pacientes-bf8eb.appspot.com",
-    messagingSenderId: "157380930535",
-    appId: "1:157380930535:web:a401c33f683dc226ac6b42",
-    measurementId: "G-JS39S2GB1B"
-  };
+      apiKey: "AIzaSyAkf0sLPhiVIe3bMCtOAt2wn8WWtR_TEfA",
+      authDomain: "ssmc-gestion-pacientes-bf8eb.firebaseapp.com",
+      projectId: "ssmc-gestion-pacientes-bf8eb",
+      databaseURL: "https://ssmc-gestion-pacientes-bf8eb-default-rtdb.firebaseio.com",
+      storageBucket: "ssmc-gestion-pacientes-bf8eb.appspot.com",
+      messagingSenderId: "157380930535",
+      appId: "1:157380930535:web:a401c33f683dc226ac6b42",
+      measurementId: "G-JS39S2GB1B"
+    };
 
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     var database = firebase.database();
   </script>
-  <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
 
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyAkf0sLPhiVIe3bMCtOAt2wn8WWtR_TEfA",
-    authDomain: "ssmc-gestion-pacientes-bf8eb.firebaseapp.com",
-    projectId: "ssmc-gestion-pacientes-bf8eb",
-    storageBucket: "ssmc-gestion-pacientes-bf8eb.appspot.com",
-    messagingSenderId: "157380930535",
-    appId: "1:157380930535:web:a401c33f683dc226ac6b42",
-    measurementId: "G-JS39S2GB1B"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-</script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdvYop972hZ_xi9_SRt2K3-iKvo_zTVGY"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdvYop972hZ_xi9_SRt2K3-iKvo_zTVGY"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-firestore.js"></script>
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
@@ -137,4 +118,5 @@
     }
   </script>
 </body>
+
 </html>

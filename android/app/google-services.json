@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "157380930535",
+    "firebase_url": "https://ssmc-gestion-pacientes-bf8eb-default-rtdb.firebaseio.com",
+    "project_id": "ssmc-gestion-pacientes-bf8eb",
+    "storage_bucket": "ssmc-gestion-pacientes-bf8eb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:157380930535:android:9cb5be13be2a8806ac6b42",
+        "android_client_info": {
+          "package_name": "com.example.ssmc_gestion_pacientes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "157380930535-gnbi36cpjg80aikjghbj69ass1sqv1dn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAda1XaEs8gPXBib_U92z-vQPLd4TIRegg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "157380930535-gnbi36cpjg80aikjghbj69ass1sqv1dn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

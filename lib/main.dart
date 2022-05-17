@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:provider/provider.dart';
@@ -15,14 +16,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   UserPrefs userPrefs = UserPrefs();
   await userPrefs.initPrefs();
-  // await Firebase.initializeApp();
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (_) => ThemeChanger(1)),
-      ChangeNotifierProvider(create: (_) => LayoutModel()),
-    ],
-    child: BlocProvider(bloc: AppBloc(), child: MyApp()),
-  ));
+  await Firebase.initializeApp();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

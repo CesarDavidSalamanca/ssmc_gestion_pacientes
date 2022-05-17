@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:ssmc_gestion_pacientes/src/patient/bloc/search_patient_bloc.dart';
+import 'package:ssmc_gestion_pacientes/src/patient/bloc/patient_bloc.dart';
 import 'package:ssmc_gestion_pacientes/src/patient/ui/widgets/patient_info_detail_cards.dart';
+
+import '../../bloc/search_patient_bloc.dart';
 
 class UpdatePatientPage extends StatefulWidget {
   @override

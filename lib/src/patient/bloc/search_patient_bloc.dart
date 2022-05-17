@@ -77,29 +77,29 @@ class SearchPatientBloc implements Bloc {
     print("searching");
   }
 
-  Future<void> insertPatient() async {
-    final patient = Patient(
-        typeDoc: typeDocument,
-        doc: document,
-        name: name,
-        illness: ilness,
-        zone: zone,
-        birthdate: aditionalPatientInfoBloc.birthdate,
-        eps: aditionalPatientInfoBloc.eps,
-        typeAfiliation: aditionalPatientInfoBloc.afiliationType,
-        civilState: aditionalPatientInfoBloc.civilState,
-        address: addressPatientInfoBloc.address,
-        carerOnMap: dataModel.currentPatient.carerOnMap,
-        carerRoadOnMap: dataModel.currentPatient.carerRoadOnMap,
-        timeFromRoadToCarer: addressPatientInfoBloc.time);
-    final response = await registerPatientWithFirebase(patient: patient);
-    print(response);
-    return;
-  }
+  // Future<void> insertPatient() async {
+  //   final patient = Patient(
+  //       typeDoc: typeDocument,
+  //       doc: document,
+  //       name: name,
+  //       illness: ilness,
+  //       zone: zone,
+  //       birthdate: aditionalPatientInfoBloc.birthdate,
+  //       eps: aditionalPatientInfoBloc.eps,
+  //       typeAfiliation: aditionalPatientInfoBloc.afiliationType,
+  //       civilState: aditionalPatientInfoBloc.civilState,
+  //       address: addressPatientInfoBloc.address,
+  //       carerOnMap: dataModel.currentPatient.carerOnMap,
+  //       carerRoadOnMap: dataModel.currentPatient.carerRoadOnMap,
+  //       timeFromRoadToCarer: addressPatientInfoBloc.time);
+  //   final response = await registerPatientWithFirebase(patient: patient);
+  //   print(response);
+  //   return;
+  // }
 
-  Future<Patient> searchPatient() async {
-    final response =
-        await getPatientWithFirebase(typeDoc: typeDocument, doc: document);
-    return response;
-  }
+  // Future<Patient> searchPatient() async {
+  //   final response =
+  //       await getPatientWithFirebase(typeDoc: typeDocument, doc: document);
+  //   return response;
+  // }
 }

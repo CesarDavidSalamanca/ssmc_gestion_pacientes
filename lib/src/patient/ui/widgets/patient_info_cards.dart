@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:ssmc_gestion_pacientes/src/patient/bloc/search_patient_bloc.dart';
+import 'package:ssmc_gestion_pacientes/src/patient/bloc/patient_bloc.dart';
 import 'package:ssmc_gestion_pacientes/src/theme/theme.dart';
 import 'package:ssmc_gestion_pacientes/src/widgets/buttons.dart';
 import 'package:ssmc_gestion_pacientes/src/widgets/textfields.dart';
+
+import '../../bloc/search_patient_bloc.dart';
 
 class SearchCards extends StatelessWidget {
   const SearchCards({

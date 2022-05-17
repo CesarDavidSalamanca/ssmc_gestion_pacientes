@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:generic_bloc_provider/generic_bloc_provider.dart';
-import 'package:provider/provider.dart';
-import 'package:ssmc_gestion_pacientes/src/patient/bloc/search_patient_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:ssmc_gestion_pacientes/src/patient/bloc/patient_bloc.dart';
+import 'package:ssmc_gestion_pacientes/src/patient/bloc/patient_state.dart';
 import 'package:ssmc_gestion_pacientes/src/patient/ui/widgets/patient_info_detail_cards.dart';
 
 class AddPatientPage extends StatefulWidget {
@@ -11,7 +12,6 @@ class AddPatientPage extends StatefulWidget {
 
 class _AddPatientPageState extends State<AddPatientPage> {
   bool firstBuild;
-  SearchPatientBloc locatePatientBloc;
   DataModel dataModel;
   @override
   void initState() {
@@ -25,23 +25,35 @@ class _AddPatientPageState extends State<AddPatientPage> {
     if (firstBuild) {
       firstBuild = false;
       dataModel = DataModel();
-      locatePatientBloc = SearchPatientBloc(dataModel);
     }
     return BlocProvider(
-      bloc: locatePatientBloc,
-      child: ChangeNotifierProvider(
-        create: (_) => dataModel,
-        child: Scaffold(
-            body: Column(
-          children: [
-            Expanded(
+      create: (_) => PatientBloc(),
+      child:
+          BlocConsumer<PatientBloc, PatientState>(listener: (context, state) {
+        if (state.success == 0 && state.error != '') {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              content: Text(state.error),
+            ),
+          );
+        }
+      }, builder: (context, snapshot) {
+        var cubit = BlocProvider.of<PatientBloc>(context);
+        return Scaffold(
+          body: Column(
+            children: [
+              Expanded(
                 child: SearchPatientCards(
-              width: width,
-              isToAdd: true,
-            )),
-          ],
-        )),
-      ),
+                  cubit: cubit,
+                  width: width,
+                  isToAdd: true,
+                ),
+              ),
+            ],
+          ),
+        );
+      }),
     );
   }
 }

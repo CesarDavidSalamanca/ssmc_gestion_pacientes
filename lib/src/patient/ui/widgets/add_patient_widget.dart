@@ -1071,3 +1071,79 @@ class DataModel with ChangeNotifier {
 
   Patient get currentPatient => this._currentPatient;
 }
+
+Widget textfieldRegister(
+  BuildContext context,
+) {
+  double width = MediaQuery.of(context).size.width;
+  if (width > 600) {
+    if (width > 900) {
+      width = ((width - 251) / 2) * 0.9;
+    } else
+      width = (width - 250) * 0.8;
+  } else {
+    width = width * 0.8;
+  }
+  double height = width * 0.16;
+
+  final currentTheme = Provider.of<ThemeChanger>(context).currentTheme;
+
+  return TextFormField(
+    style: TextStyle(
+        fontSize: height * 0.2, color: currentTheme.textTheme.bodyText1.color),
+    controller: _textEditingController,
+    enabled: enable,
+    keyboardType: keyboardType,
+    obscureText: obscureText,
+    decoration: InputDecoration(
+      prefixIconConstraints: button == null
+          ? null
+          : BoxConstraints(minHeight: height * 0.75, minWidth: height * 1.35),
+      prefixIcon: button != null
+          ? button
+          : icon == null
+              ? null
+              : Container(
+                  // width: height * 0.8,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      SizedBox(),
+                      SizedBox(),
+                      SvgPicture.asset(
+                        icon,
+                        width: height * 0.2,
+                        color: currentTheme.dividerColor,
+                      ),
+                      // Icon(
+                      //   icon,
+                      //   size: height * 0.25,
+                      //   color: currentTheme.dividerColor,
+                      // ),
+                      SizedBox(),
+                      SizedBox(),
+                      Container(
+                        height: height * 0.4,
+                        width: 0.5,
+                        color: currentTheme.dividerColor,
+                      ),
+                      SizedBox(),
+                    ],
+                  ),
+                ),
+      fillColor: currentTheme.secondaryHeaderColor,
+      filled: true,
+      isDense: true,
+      contentPadding: EdgeInsets.all(height * 0.2),
+      border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(7.5),
+          borderSide: BorderSide.none),
+      hintText: hintText,
+      hintStyle: TextStyle(color: Colors.grey),
+      // labelText: labelText,
+      counterText: counterText,
+      errorStyle: TextStyle(fontSize: height * 0.2, height: height * 0.014),
+    ),
+  );
+}
